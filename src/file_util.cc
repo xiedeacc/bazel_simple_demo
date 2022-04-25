@@ -9,15 +9,12 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include <fstream>
 #include <string>
-#include <vector>
 
 #include "boost/filesystem.hpp"
 #include "glog/logging.h"
 
 using std::string;
-using std::vector;
 
 void FileUtil::Sha256HashString(unsigned char hash[SHA256_DIGEST_LENGTH],
                                 char output_buffer[65]) {
@@ -32,7 +29,6 @@ void FileUtil::StringSha256(const string &str, char output_buffer[65]) {
   unsigned char hash[SHA256_DIGEST_LENGTH];
   SHA256_CTX sha256;
   SHA256_Init(&sha256);
-  LOG(INFO) << str.size();
   SHA256_Update(&sha256, str.c_str(), str.size());
   SHA256_Final(hash, &sha256);
   Sha256HashString(hash, output_buffer);
@@ -50,8 +46,6 @@ bool FileUtil::FileSha256(const string &file_path, char output_buffer[65]) {
   int bytes_read = 0;
   if (!buffer) return false;
   while ((bytes_read = fread(buffer, 1, buf_size, file))) {
-    LOG(INFO) << buffer;
-    LOG(INFO) << bytes_read;
     SHA256_Update(&sha256, buffer, bytes_read);
   }
   SHA256_Final(hash, &sha256);
@@ -75,6 +69,9 @@ bool FileUtil::FileIsExists(const string &file_path) {
 }
 
 void FileUtil::DoCompare(const string &left_file, const string &right_file) {
+  if (left_file.find(".wiki.git") != string::npos) {
+    return;
+  }
   struct stat left_st;
   ::stat(left_file.c_str(), &left_st);
 
@@ -90,9 +87,9 @@ void FileUtil::DoCompare(const string &left_file, const string &right_file) {
 
     LOG(ERROR) << left_file;
     LOG(ERROR) << right_file;
-    LOG(ERROR) << "size not equal! "
-               << "left sha256 value: " << left_sha256_value
-               << ", right sha256 value:" << right_sha256_value;
+    LOG(ERROR) << "left sha256 value: " << left_sha256_value;
+    LOG(ERROR) << "right sha256 value:" << right_sha256_value;
+    LOG(ERROR) << "size not equal!";
     LOG(ERROR) << "=============================================";
   }
 }
@@ -101,7 +98,6 @@ bool FileUtil::CompareDirRecursive(const string &left_dir,
                                    const string &right_dir) {
   ::DIR *d;
   struct dirent *ent;
-  vector<string> ret;
   if ((d = opendir(left_dir.c_str())) == nullptr) {
     LOG(ERROR) << "Fail to opendir " << left_dir;
     return false;
@@ -123,7 +119,7 @@ bool FileUtil::CompareDirRecursive(const string &left_dir,
     }
 
     if ((IsDirectory(left_full_path) && !IsDirectory(right_full_path)) ||
-        (IsDirectory(left_full_path) && IsDirectory(right_full_path))) {
+        (!IsDirectory(left_full_path) && IsDirectory(right_full_path))) {
       LOG(ERROR) << left_full_path << " is "
                  << (IsDirectory(left_full_path) ? "directory" : "file");
       LOG(ERROR) << right_full_path << " is "

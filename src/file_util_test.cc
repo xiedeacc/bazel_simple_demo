@@ -37,7 +37,9 @@ TEST(FileUtilTest, StringSha256) {
 
 TEST(FileUtilTest, FileSha256) {
   char sha256_value[65];
+  // NOTICE: vim will add a new line character at end of line automatic
   FileUtil::FileSha256("test_data/file_sha256_1", sha256_value);
+
   ASSERT_EQ(
       strcmp(
           sha256_value,

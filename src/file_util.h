@@ -5,12 +5,10 @@
 
 #ifndef FILE_UTIL_H_
 #define FILE_UTIL_H_
+
 #include <openssl/sha.h>
 
-#include <cstddef>
-#include <sstream>
 #include <string>
-#include <vector>
 
 class FileUtil {
  private:
