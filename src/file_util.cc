@@ -69,9 +69,9 @@ bool FileUtil::FileIsExists(const string &file_path) {
 }
 
 void FileUtil::DoCompare(const string &left_file, const string &right_file) {
-  if (left_file.find(".wiki.git") != string::npos) {
-    return;
-  }
+  // if (left_file.find(".wiki.git") == string::npos) {
+  // return;
+  //}
   struct stat left_st;
   ::stat(left_file.c_str(), &left_st);
 
@@ -85,12 +85,10 @@ void FileUtil::DoCompare(const string &left_file, const string &right_file) {
     FileSha256(left_file, left_sha256_value);
     FileSha256(right_file, right_sha256_value);
 
-    LOG(ERROR) << left_file;
-    LOG(ERROR) << right_file;
-    LOG(ERROR) << "left sha256 value: " << left_sha256_value;
-    LOG(ERROR) << "right sha256 value: " << right_sha256_value;
-    LOG(ERROR) << "size not equal!";
-    LOG(ERROR) << "=============================================";
+    LOG(ERROR) << "left: " << left_file << ", right: " << right_file
+               << ", left sha256 value: " << left_sha256_value
+               << ", right sha256 value: " << right_sha256_value
+               << ". size not equal!";
   }
 }
 
