@@ -88,7 +88,7 @@ void FileUtil::DoCompare(const string &left_file, const string &right_file) {
     LOG(ERROR) << left_file;
     LOG(ERROR) << right_file;
     LOG(ERROR) << "left sha256 value: " << left_sha256_value;
-    LOG(ERROR) << "right sha256 value:" << right_sha256_value;
+    LOG(ERROR) << "right sha256 value: " << right_sha256_value;
     LOG(ERROR) << "size not equal!";
     LOG(ERROR) << "=============================================";
   }
