@@ -23,7 +23,7 @@ void FileUtil::Sha256HashString(unsigned char hash[SHA256_DIGEST_LENGTH],
                                 char output_buffer[65]) {
   int i = 0;
   for (i = 0; i < SHA256_DIGEST_LENGTH; i++) {
-    snprintf(output_buffer + (i * 2), 1, "%02x", hash[i]);
+    sprintf(output_buffer + (i * 2), "%02x", hash[i]);  // NOLINT
   }
   output_buffer[64] = 0;
 }
@@ -32,6 +32,7 @@ void FileUtil::StringSha256(const string &str, char output_buffer[65]) {
   unsigned char hash[SHA256_DIGEST_LENGTH];
   SHA256_CTX sha256;
   SHA256_Init(&sha256);
+  LOG(INFO) << str.size();
   SHA256_Update(&sha256, str.c_str(), str.size());
   SHA256_Final(hash, &sha256);
   Sha256HashString(hash, output_buffer);
@@ -49,6 +50,8 @@ bool FileUtil::FileSha256(const string &file_path, char output_buffer[65]) {
   int bytes_read = 0;
   if (!buffer) return false;
   while ((bytes_read = fread(buffer, 1, buf_size, file))) {
+    LOG(INFO) << buffer;
+    LOG(INFO) << bytes_read;
     SHA256_Update(&sha256, buffer, bytes_read);
   }
   SHA256_Final(hash, &sha256);

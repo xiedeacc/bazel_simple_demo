@@ -41,12 +41,9 @@ cc_test(
     name = "file_util_test",
     srcs = ["file_util_test.cc"],
     data = [
-        "//test_data/directory/",
-        "//test_data/file",
-        "//test_data/file_sha256_1",
-        "//test_data/file_sha256_2",
+        "//test_data:exported_testdata",
     ],
-    deps = [],
+    deps = [":file_util"],
 )
 
 cpplint()
