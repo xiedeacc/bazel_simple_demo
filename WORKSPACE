@@ -14,11 +14,13 @@ load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 bazel_skylib_workspace()
 
 register_execution_platforms(
-    "@bazel_simple_demo//platforms:linux_gcc_10_aarch64",
+    "@bazel_simple_demo//platforms:linux_gcc_aarch64",
+    "@bazel_simple_demo//platforms:windows_mingw_x86_64",
 )
 
 register_toolchains(
-    "@bazel_simple_demo//toolchains:gcc_10_aarch64_xcompile_toolchain",
+    "@bazel_simple_demo//toolchains:gcc_arm_aarch64_xcompile_toolchain",
+    "@bazel_simple_demo//toolchains:windows_mingw_x86_64_toolchain",
 )
 
 git_repository(
@@ -64,7 +66,7 @@ new_git_repository(
 
 git_repository(
     name = "bazel_build_file_repo",
-    commit = "3b815705931abf6639873932e2c79d3a55b5ddfa",
+    commit = "63856d2a674063208e5906332f00b25d27f5470d",
     remote = "https://github.com/xiedeacc/bazel_build_file_repo.git",
 )
 
@@ -98,8 +100,8 @@ load("@com_github_nelhage_rules_boost//:boost/boost.bzl", "boost_deps")
 boost_deps()
 
 http_archive(
-    name = "gcc_10_aarch64",
-    build_file = "@bazel_build_file_repo//bazel:gcc_aarch64.BUILD",
+    name = "gcc_arm_aarch64",
+    build_file = "@bazel_build_file_repo//bazel:gcc_arm_aarch64.BUILD",
     sha256 = "1e33d53dea59c8de823bbdfe0798280bdcd138636c7060da9d77a97ded095a84",
     strip_prefix = "gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu",
     #urls = ["https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu.tar.xz"],

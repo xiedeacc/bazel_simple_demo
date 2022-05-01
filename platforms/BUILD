@@ -9,9 +9,9 @@ platform(
 )
 
 platform(
-    name = "linux_gcc_10_aarch64",
+    name = "windows_mingw_x86_64",
     constraint_values = [
-        "//:gcc_10",
+        "@platforms//cpu:x86_64",
+        "@platforms//os:windows",
     ],
-    parents = [":linux_gcc_aarch64"],
 )
