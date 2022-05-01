@@ -1,5 +1,5 @@
-load("//tools:cpplint.bzl", "cpplint")
-load("//tools:build.bzl", "cc_test")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
+#load("//tools:cpplint.bzl", "cpplint")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -8,7 +8,6 @@ cc_library(
     srcs = ["file_util.cc"],
     hdrs = ["file_util.h"],
     deps = [
-        "@openssl",
         "@boost//:filesystem",
         "@boost//:smart_ptr",
         "@glog",
@@ -33,17 +32,16 @@ cc_binary(
         "@boost//:algorithm",
         "@boost//:filesystem",
         "@glog",
-        "@com_github_gperftools_gperftools//:gperftools",
     ],
 )
 
-cc_test(
-    name = "file_util_test",
-    srcs = ["file_util_test.cc"],
-    data = [
-        "//test_data:exported_testdata",
-    ],
-    deps = [":file_util"],
-)
+#cc_test(
+#name = "file_util_test",
+#srcs = ["file_util_test.cc"],
+#data = [
+#"//test_data:exported_testdata",
+#],
+#deps = [":file_util"],
+#)
 
-cpplint()
+#cpplint()
