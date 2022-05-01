@@ -55,10 +55,23 @@ load("@com_grail_bazel_compdb//:deps.bzl", "bazel_compdb_deps")
 
 bazel_compdb_deps()
 
+new_git_repository(
+    name = "cpplint",
+    build_file = "@bazel_build_file_repo//bazel:cpplint.BUILD",
+    remote = "https://github.com/cpplint/cpplint.git",
+    tag = "1.6.0",
+)
+
 git_repository(
     name = "bazel_build_file_repo",
     commit = "3b815705931abf6639873932e2c79d3a55b5ddfa",
     remote = "https://github.com/xiedeacc/bazel_build_file_repo.git",
+)
+
+git_repository(
+    name = "com_google_googletest",
+    remote = "https://github.com/google/googletest.git",
+    tag = "release-1.11.0",
 )
 
 git_repository(

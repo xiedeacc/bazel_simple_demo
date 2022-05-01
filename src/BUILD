@@ -1,5 +1,5 @@
-load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library")
-#load("//tools:cpplint.bzl", "cpplint")
+load("//tools:cpplint.bzl", "cpplint")
+load("//tools:build.bzl", "cc_test")
 
 package(default_visibility = ["//visibility:public"])
 
@@ -35,13 +35,15 @@ cc_binary(
     ],
 )
 
-#cc_test(
-#name = "file_util_test",
-#srcs = ["file_util_test.cc"],
-#data = [
-#"//test_data:exported_testdata",
-#],
-#deps = [":file_util"],
-#)
+cc_test(
+    name = "file_util_test",
+    srcs = ["file_util_test.cc"],
+    data = [
+        "//test_data:exported_testdata",
+    ],
+    deps = [
+        ":file_util",
+    ],
+)
 
-#cpplint()
+cpplint()
