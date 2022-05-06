@@ -14,6 +14,8 @@ load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 bazel_skylib_workspace()
 
 register_execution_platforms(
+    "@bazel_simple_demo//platforms:linux_gcc9_aarch64",
+    "@bazel_simple_demo//platforms:linux_gcc9_armv7",
     "@bazel_simple_demo//platforms:linux_gcc10_aarch64",
     "@bazel_simple_demo//platforms:linux_gcc10_armv7",
     "@bazel_simple_demo//platforms:linux_gcc11_aarch64",
@@ -22,10 +24,12 @@ register_execution_platforms(
 )
 
 register_toolchains(
-    "@bazel_simple_demo//toolchains:gcc11_arm_aarch64_xcompile_toolchain",
-    "@bazel_simple_demo//toolchains:gcc11_arm_armv7_xcompile_toolchain",
+    "@bazel_simple_demo//toolchains:gcc9_arm_aarch64_xcompile_toolchain",
+    "@bazel_simple_demo//toolchains:gcc9_arm_armv7_xcompile_toolchain",
     "@bazel_simple_demo//toolchains:gcc10_arm_aarch64_xcompile_toolchain",
     "@bazel_simple_demo//toolchains:gcc10_arm_armv7_xcompile_toolchain",
+    "@bazel_simple_demo//toolchains:gcc11_arm_aarch64_xcompile_toolchain",
+    "@bazel_simple_demo//toolchains:gcc11_arm_armv7_xcompile_toolchain",
     "@bazel_simple_demo//toolchains:windows_mingw_x86_64_toolchain",
 )
 
@@ -44,7 +48,7 @@ rules_cc_toolchains()
 git_repository(
     name = "rules_foreign_cc",
     remote = "https://github.com/bazelbuild/rules_foreign_cc.git",
-    tag = "0.7.1",
+    tag = "0.8.0",
 )
 
 load("@rules_foreign_cc//foreign_cc:repositories.bzl", "rules_foreign_cc_dependencies")
@@ -72,7 +76,7 @@ new_git_repository(
 
 git_repository(
     name = "bazel_build_file_repo",
-    commit = "7a4f180a8e0ce129077be3af44147f7e601c7928",
+    commit = "6f2d852792561b22e1cf897e41ecf9e70cd22fdc",
     remote = "https://github.com/xiedeacc/bazel_build_file_repo.git",
 )
 
@@ -104,6 +108,24 @@ http_archive(
 load("@com_github_nelhage_rules_boost//:boost/boost.bzl", "boost_deps")
 
 boost_deps()
+
+http_archive(
+    name = "gcc9_arm_aarch64",
+    build_file = "@bazel_build_file_repo//bazel:gcc_arm_aarch64.BUILD",
+    sha256 = "8dfe681531f0bd04fb9c53cf3c0a3368c616aa85d48938eebe2b516376e06a66",
+    strip_prefix = "gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu",
+    #urls = ["https://developer.arm.com/-/media/Files/downloads/gnu-a/9.2-2019.12/binrel/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu.tar.xz"],
+    urls = ["file:///root/src/cpp/toolchains/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu.tar.xz"],
+)
+
+http_archive(
+    name = "gcc9_arm_armv7",
+    build_file = "@bazel_build_file_repo//bazel:gcc_arm_armv7.BUILD",
+    sha256 = "ac952d89ae0fc3543e81099e7d34917efc621f5def112eee843fd1ce755eca8c",
+    strip_prefix = "gcc-arm-9.2-2019.12-x86_64-arm-none-eabi",
+    #urls = ["https://developer.arm.com/-/media/Files/downloads/gnu-a/9.2-2019.12/binrel/gcc-arm-9.2-2019.12-x86_64-arm-none-eabi.tar.xz"],
+    urls = ["file:///root/src/cpp/toolchains/gcc-arm-9.2-2019.12-x86_64-arm-none-eabi.tar.xz"],
+)
 
 http_archive(
     name = "gcc10_arm_aarch64",

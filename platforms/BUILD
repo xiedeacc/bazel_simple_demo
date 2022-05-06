@@ -3,6 +3,11 @@ package(default_visibility = ["//visibility:public"])
 constraint_setting(name = "gcc_version")
 
 constraint_value(
+    name = "gcc_9",
+    constraint_setting = ":gcc_version",
+)
+
+constraint_value(
     name = "gcc_10",
     constraint_setting = ":gcc_version",
 )
@@ -10,6 +15,24 @@ constraint_value(
 constraint_value(
     name = "gcc_11",
     constraint_setting = ":gcc_version",
+)
+
+platform(
+    name = "linux_gcc9_aarch64",
+    constraint_values = [
+        "@platforms//cpu:aarch64",
+        "@platforms//os:linux",
+        ":gcc_9",
+    ],
+)
+
+platform(
+    name = "linux_gcc9_armv7",
+    constraint_values = [
+        "@platforms//cpu:armv7",
+        "@platforms//os:linux",
+        ":gcc_9",
+    ],
 )
 
 platform(
