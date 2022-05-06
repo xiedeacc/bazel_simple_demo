@@ -76,7 +76,7 @@ new_git_repository(
 
 git_repository(
     name = "bazel_build_file_repo",
-    commit = "6f2d852792561b22e1cf897e41ecf9e70cd22fdc",
+    commit = "f1e34553656fb6ebd6c48136bfe1aa67c2856df4",
     remote = "https://github.com/xiedeacc/bazel_build_file_repo.git",
 )
 
@@ -111,7 +111,7 @@ boost_deps()
 
 http_archive(
     name = "gcc9_arm_aarch64",
-    build_file = "@bazel_build_file_repo//bazel:gcc_arm_aarch64.BUILD",
+    build_file = "@bazel_build_file_repo//bazel:gcc_aarch64.BUILD",
     sha256 = "8dfe681531f0bd04fb9c53cf3c0a3368c616aa85d48938eebe2b516376e06a66",
     strip_prefix = "gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu",
     #urls = ["https://developer.arm.com/-/media/Files/downloads/gnu-a/9.2-2019.12/binrel/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu.tar.xz"],
