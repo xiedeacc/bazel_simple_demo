@@ -1,16 +1,66 @@
 package(default_visibility = ["//visibility:public"])
 
 toolchain(
-    name = "gcc_arm_aarch64_xcompile_toolchain",
+    name = "gcc11_arm_aarch64_xcompile_toolchain",
     exec_compatible_with = [
         "@platforms//cpu:aarch64",
         "@platforms//os:linux",
+        "//platforms:gcc_11",
     ],
     target_compatible_with = [
         "@platforms//cpu:aarch64",
         "@platforms//os:linux",
+        "//platforms:gcc_11",
     ],
-    toolchain = "@gcc_arm_aarch64//:cc_toolchain",
+    toolchain = "@gcc11_arm_aarch64//:cc_toolchain",
+    toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
+)
+
+toolchain(
+    name = "gcc11_arm_armv7_xcompile_toolchain",
+    exec_compatible_with = [
+        "@platforms//cpu:aarch64",
+        "@platforms//os:linux",
+        "//platforms:gcc_11",
+    ],
+    target_compatible_with = [
+        "@platforms//cpu:armv7",
+        "@platforms//os:linux",
+        "//platforms:gcc_11",
+    ],
+    toolchain = "@gcc11_arm_armv7//:cc_toolchain",
+    toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
+)
+
+toolchain(
+    name = "gcc10_arm_aarch64_xcompile_toolchain",
+    exec_compatible_with = [
+        "@platforms//cpu:aarch64",
+        "@platforms//os:linux",
+        "//platforms:gcc_10",
+    ],
+    target_compatible_with = [
+        "@platforms//cpu:aarch64",
+        "@platforms//os:linux",
+        "//platforms:gcc_10",
+    ],
+    toolchain = "@gcc10_arm_aarch64//:cc_toolchain",
+    toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
+)
+
+toolchain(
+    name = "gcc10_arm_armv7_xcompile_toolchain",
+    exec_compatible_with = [
+        "@platforms//cpu:aarch64",
+        "@platforms//os:linux",
+        "//platforms:gcc_10",
+    ],
+    target_compatible_with = [
+        "@platforms//cpu:armv7",
+        "@platforms//os:linux",
+        "//platforms:gcc_10",
+    ],
+    toolchain = "@gcc10_arm_armv7//:cc_toolchain",
     toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
 )
 

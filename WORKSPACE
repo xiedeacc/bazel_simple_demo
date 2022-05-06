@@ -14,12 +14,18 @@ load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 bazel_skylib_workspace()
 
 register_execution_platforms(
-    "@bazel_simple_demo//platforms:linux_gcc_aarch64",
+    "@bazel_simple_demo//platforms:linux_gcc10_aarch64",
+    "@bazel_simple_demo//platforms:linux_gcc10_armv7",
+    "@bazel_simple_demo//platforms:linux_gcc11_aarch64",
+    "@bazel_simple_demo//platforms:linux_gcc11_armv7",
     "@bazel_simple_demo//platforms:windows_mingw_x86_64",
 )
 
 register_toolchains(
-    "@bazel_simple_demo//toolchains:gcc_arm_aarch64_xcompile_toolchain",
+    "@bazel_simple_demo//toolchains:gcc11_arm_aarch64_xcompile_toolchain",
+    "@bazel_simple_demo//toolchains:gcc11_arm_armv7_xcompile_toolchain",
+    "@bazel_simple_demo//toolchains:gcc10_arm_aarch64_xcompile_toolchain",
+    "@bazel_simple_demo//toolchains:gcc10_arm_armv7_xcompile_toolchain",
     "@bazel_simple_demo//toolchains:windows_mingw_x86_64_toolchain",
 )
 
@@ -66,7 +72,7 @@ new_git_repository(
 
 git_repository(
     name = "bazel_build_file_repo",
-    commit = "63856d2a674063208e5906332f00b25d27f5470d",
+    commit = "7a4f180a8e0ce129077be3af44147f7e601c7928",
     remote = "https://github.com/xiedeacc/bazel_build_file_repo.git",
 )
 
@@ -100,10 +106,50 @@ load("@com_github_nelhage_rules_boost//:boost/boost.bzl", "boost_deps")
 boost_deps()
 
 http_archive(
-    name = "gcc_arm_aarch64",
+    name = "gcc10_arm_aarch64",
     build_file = "@bazel_build_file_repo//bazel:gcc_arm_aarch64.BUILD",
     sha256 = "1e33d53dea59c8de823bbdfe0798280bdcd138636c7060da9d77a97ded095a84",
     strip_prefix = "gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu",
     #urls = ["https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu.tar.xz"],
     urls = ["file:///root/src/cpp/toolchains/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu.tar.xz"],
+)
+
+http_archive(
+    name = "gcc10_arm_armv7",
+    build_file = "@bazel_build_file_repo//bazel:gcc_arm_armv7.BUILD",
+    sha256 = "45225813f74e0c3f76af2715d30d1fbebb873c1abe7098f9c694e5567cc2279c",
+    strip_prefix = "gcc-arm-10.3-2021.07-x86_64-arm-none-eabi",
+    #urls = ["https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/gcc-arm-10.3-2021.07-x86_64-arm-none-eabi.tar.xz"],
+    urls = ["file:///root/src/cpp/toolchains/gcc-arm-10.3-2021.07-x86_64-arm-none-eabi.tar.xz"],
+)
+
+http_archive(
+    name = "gcc11_arm_aarch64",
+    build_file = "@bazel_build_file_repo//bazel:gcc_arm_aarch64.BUILD",
+    sha256 = "52dbac3eb71dbe0916f60a8c5ab9b7dc9b66b3ce513047baa09fae56234e53f3",
+    strip_prefix = "gcc-arm-11.2-2022.02-x86_64-aarch64-none-linux-gnu",
+    #urls = ["https://developer.arm.com/-/media/Files/downloads/gnu/11.2-2022.02/binrel/gcc-arm-11.2-2022.02-x86_64-aarch64-none-linux-gnu.tar.xz"],
+    urls = ["file:///root/src/cpp/toolchains/gcc-arm-11.2-2022.02-x86_64-aarch64-none-linux-gnu.tar.xz"],
+)
+
+http_archive(
+    name = "gcc11_arm_armv7",
+    build_file = "@bazel_build_file_repo//bazel:gcc_arm_armv7.BUILD",
+    sha256 = "8c5acd5ae567c0100245b0556941c237369f210bceb196edfe5a2e7532c60326",
+    strip_prefix = "gcc-arm-11.2-2022.02-x86_64-arm-none-eabi",
+    #urls = ["https://developer.arm.com/-/media/Files/downloads/gnu/11.2-2022.02/binrel/gcc-arm-11.2-2022.02-x86_64-arm-none-eabi.tar.xz"],
+    urls = ["file:///root/src/cpp/toolchains/gcc-arm-11.2-2022.02-x86_64-arm-none-eabi.tar.xz"],
+)
+
+http_archive(
+    name = "com_github_gperftools_gperftools",
+    build_file = "@bazel_build_file_repo//bazel:gperftools.BUILD",
+    sha256 = "ea566e528605befb830671e359118c2da718f721c27225cbbc93858c7520fee3",
+    strip_prefix = "gperftools-2.9.1",
+    urls = ["https://github.com/gperftools/gperftools/releases/download/gperftools-2.9.1/gperftools-2.9.1.tar.gz"],
+)
+
+bind(
+    name = "gperftools",
+    actual = "@bazel_build_file_repo//bazel:gperftools",
 )
