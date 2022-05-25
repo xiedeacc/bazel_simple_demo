@@ -13,26 +13,6 @@ load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 
 bazel_skylib_workspace()
 
-register_execution_platforms(
-    "@bazel_simple_demo//platforms:linux_gcc9_aarch64",
-    "@bazel_simple_demo//platforms:linux_gcc9_armv7",
-    "@bazel_simple_demo//platforms:linux_gcc10_aarch64",
-    "@bazel_simple_demo//platforms:linux_gcc10_armv7",
-    "@bazel_simple_demo//platforms:linux_gcc11_aarch64",
-    "@bazel_simple_demo//platforms:linux_gcc11_armv7",
-    "@bazel_simple_demo//platforms:windows_mingw_x86_64",
-)
-
-register_toolchains(
-    "@bazel_simple_demo//toolchains:gcc9_arm_aarch64_xcompile_toolchain",
-    "@bazel_simple_demo//toolchains:gcc9_arm_armv7_xcompile_toolchain",
-    "@bazel_simple_demo//toolchains:gcc10_arm_aarch64_xcompile_toolchain",
-    "@bazel_simple_demo//toolchains:gcc10_arm_armv7_xcompile_toolchain",
-    "@bazel_simple_demo//toolchains:gcc11_arm_aarch64_xcompile_toolchain",
-    "@bazel_simple_demo//toolchains:gcc11_arm_armv7_xcompile_toolchain",
-    "@bazel_simple_demo//toolchains:windows_mingw_x86_64_toolchain",
-)
-
 git_repository(
     name = "rules_cc",
     commit = "58f8e026c00a8a20767e3dc669f46ba23bc93bdb",
@@ -67,17 +47,27 @@ load("@com_grail_bazel_compdb//:deps.bzl", "bazel_compdb_deps")
 
 bazel_compdb_deps()
 
+git_repository(
+    name = "bazel_build_file_repo",
+    commit = "a98b06cffea5b39556b97afe5735801aaeeb2613",
+    remote = "https://github.com/xiedeacc/bazel_build_file_repo.git",
+)
+
+load("@bazel_build_file_repo//bazel:repositories.bzl", "deps")
+load("@bazel_build_file_repo//toolchains:toolchains.bzl", "register_all_toolchains")
+load("@bazel_build_file_repo//platforms:platforms.bzl", "register_all_execution_platforms")
+
+deps()
+
+register_all_toolchains()
+
+register_all_execution_platforms()
+
 new_git_repository(
     name = "cpplint",
     build_file = "@bazel_build_file_repo//bazel:cpplint.BUILD",
     remote = "https://github.com/cpplint/cpplint.git",
     tag = "1.6.0",
-)
-
-git_repository(
-    name = "bazel_build_file_repo",
-    commit = "6f2d852792561b22e1cf897e41ecf9e70cd22fdc",
-    remote = "https://github.com/xiedeacc/bazel_build_file_repo.git",
 )
 
 git_repository(
@@ -110,66 +100,18 @@ load("@com_github_nelhage_rules_boost//:boost/boost.bzl", "boost_deps")
 boost_deps()
 
 http_archive(
-    name = "gcc9_arm_aarch64",
-    build_file = "@bazel_build_file_repo//bazel:gcc_arm_aarch64.BUILD",
-    sha256 = "8dfe681531f0bd04fb9c53cf3c0a3368c616aa85d48938eebe2b516376e06a66",
-    strip_prefix = "gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu",
-    #urls = ["https://developer.arm.com/-/media/Files/downloads/gnu-a/9.2-2019.12/binrel/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu.tar.xz"],
-    urls = ["file:///root/src/cpp/toolchains/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu.tar.xz"],
-)
-
-http_archive(
-    name = "gcc9_arm_armv7",
-    build_file = "@bazel_build_file_repo//bazel:gcc_arm_armv7.BUILD",
-    sha256 = "ac952d89ae0fc3543e81099e7d34917efc621f5def112eee843fd1ce755eca8c",
-    strip_prefix = "gcc-arm-9.2-2019.12-x86_64-arm-none-eabi",
-    #urls = ["https://developer.arm.com/-/media/Files/downloads/gnu-a/9.2-2019.12/binrel/gcc-arm-9.2-2019.12-x86_64-arm-none-eabi.tar.xz"],
-    urls = ["file:///root/src/cpp/toolchains/gcc-arm-9.2-2019.12-x86_64-arm-none-eabi.tar.xz"],
-)
-
-http_archive(
-    name = "gcc10_arm_aarch64",
-    build_file = "@bazel_build_file_repo//bazel:gcc_arm_aarch64.BUILD",
-    sha256 = "1e33d53dea59c8de823bbdfe0798280bdcd138636c7060da9d77a97ded095a84",
-    strip_prefix = "gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu",
-    #urls = ["https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu.tar.xz"],
-    urls = ["file:///root/src/cpp/toolchains/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu.tar.xz"],
-)
-
-http_archive(
-    name = "gcc10_arm_armv7",
-    build_file = "@bazel_build_file_repo//bazel:gcc_arm_armv7.BUILD",
-    sha256 = "45225813f74e0c3f76af2715d30d1fbebb873c1abe7098f9c694e5567cc2279c",
-    strip_prefix = "gcc-arm-10.3-2021.07-x86_64-arm-none-eabi",
-    #urls = ["https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/gcc-arm-10.3-2021.07-x86_64-arm-none-eabi.tar.xz"],
-    urls = ["file:///root/src/cpp/toolchains/gcc-arm-10.3-2021.07-x86_64-arm-none-eabi.tar.xz"],
-)
-
-http_archive(
-    name = "gcc11_arm_aarch64",
-    build_file = "@bazel_build_file_repo//bazel:gcc_arm_aarch64.BUILD",
-    sha256 = "52dbac3eb71dbe0916f60a8c5ab9b7dc9b66b3ce513047baa09fae56234e53f3",
-    strip_prefix = "gcc-arm-11.2-2022.02-x86_64-aarch64-none-linux-gnu",
-    #urls = ["https://developer.arm.com/-/media/Files/downloads/gnu/11.2-2022.02/binrel/gcc-arm-11.2-2022.02-x86_64-aarch64-none-linux-gnu.tar.xz"],
-    urls = ["file:///root/src/cpp/toolchains/gcc-arm-11.2-2022.02-x86_64-aarch64-none-linux-gnu.tar.xz"],
-)
-
-http_archive(
-    name = "gcc11_arm_armv7",
-    build_file = "@bazel_build_file_repo//bazel:gcc_arm_armv7.BUILD",
-    sha256 = "8c5acd5ae567c0100245b0556941c237369f210bceb196edfe5a2e7532c60326",
-    strip_prefix = "gcc-arm-11.2-2022.02-x86_64-arm-none-eabi",
-    #urls = ["https://developer.arm.com/-/media/Files/downloads/gnu/11.2-2022.02/binrel/gcc-arm-11.2-2022.02-x86_64-arm-none-eabi.tar.xz"],
-    urls = ["file:///root/src/cpp/toolchains/gcc-arm-11.2-2022.02-x86_64-arm-none-eabi.tar.xz"],
-)
-
-http_archive(
     name = "com_github_gperftools_gperftools",
     build_file = "@bazel_build_file_repo//bazel:gperftools.BUILD",
-    sha256 = "ea566e528605befb830671e359118c2da718f721c27225cbbc93858c7520fee3",
+    sha256 = "d738813facb411fa5fb629bda9fd5f78832e6999d3f6514a08491ebc233f346c",
     strip_prefix = "gperftools-2.9.1",
-    urls = ["https://github.com/gperftools/gperftools/releases/download/gperftools-2.9.1/gperftools-2.9.1.tar.gz"],
+    urls = ["https://raw.githubusercontent.com/xiedeacc/bazel_build_file_repo/master/repo/gperftools-2.9.1.tar.gz"],
 )
+
+#new_local_repository(
+#name = "com_github_gperftools_gperftools",
+#build_file = "@bazel_build_file_repo//bazel:gperftools.BUILD",
+#path = "/root/src/cpp/gperftools-2.9.1",
+#)
 
 bind(
     name = "gperftools",

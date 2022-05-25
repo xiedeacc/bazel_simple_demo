@@ -16,7 +16,13 @@ class FileUtil {
  public:
   static bool CompareDirRecursive(const std::string &left_dir,
                                   const std::string &right_dir);
+
+  static void MergeLfsFile(const std::string &src_dir,
+                           const std::string &dest_dir);
+
   static bool IsDirectory(const std::string &file_path);
+
+  static bool IsRegularFile(const std::string &file_path);
 
   static bool FileIsExists(const std::string &file_path);
 
