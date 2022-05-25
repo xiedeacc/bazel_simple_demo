@@ -49,7 +49,7 @@ bazel_compdb_deps()
 
 git_repository(
     name = "bazel_build_file_repo",
-    commit = "a98b06cffea5b39556b97afe5735801aaeeb2613",
+    commit = "842b1e6cea0a6828150bda4f2e33c2ffb175937e",
     remote = "https://github.com/xiedeacc/bazel_build_file_repo.git",
 )
 
@@ -99,21 +99,15 @@ load("@com_github_nelhage_rules_boost//:boost/boost.bzl", "boost_deps")
 
 boost_deps()
 
-http_archive(
-    name = "com_github_gperftools_gperftools",
-    build_file = "@bazel_build_file_repo//bazel:gperftools.BUILD",
-    sha256 = "d738813facb411fa5fb629bda9fd5f78832e6999d3f6514a08491ebc233f346c",
-    strip_prefix = "gperftools-2.9.1",
-    urls = ["https://raw.githubusercontent.com/xiedeacc/bazel_build_file_repo/master/repo/gperftools-2.9.1.tar.gz"],
-)
-
-#new_local_repository(
+#http_archive(
 #name = "com_github_gperftools_gperftools",
 #build_file = "@bazel_build_file_repo//bazel:gperftools.BUILD",
-#path = "/root/src/cpp/gperftools-2.9.1",
+#sha256 = "d738813facb411fa5fb629bda9fd5f78832e6999d3f6514a08491ebc233f346c",
+#strip_prefix = "gperftools-2.9.1",
+#urls = ["https://raw.githubusercontent.com/xiedeacc/bazel_build_file_repo/master/repo/gperftools-2.9.1.tar.gz"],
 #)
 
-bind(
-    name = "gperftools",
-    actual = "@bazel_build_file_repo//bazel:gperftools",
-)
+#bind(
+#name = "gperftools",
+#actual = "@bazel_build_file_repo//bazel:gperftools",
+#)

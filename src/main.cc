@@ -3,7 +3,7 @@
  * All rights reserved.
  *******************************************************************************/
 
-#include "gperftools/profiler.h"
+// #include "gperftools/profiler.h"
 #include "src/file_util.h"
 
 int main(int argc, char** argv) {

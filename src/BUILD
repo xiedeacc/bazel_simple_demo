@@ -31,7 +31,7 @@ cc_binary(
         ":file_util",
         "@boost//:algorithm",
         "@boost//:filesystem",
-        "@com_github_gperftools_gperftools//:gperftools",
+        #"@com_github_gperftools_gperftools//:gperftools",
         "@glog",
     ],
 )
