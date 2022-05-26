@@ -7,6 +7,7 @@ cc_library(
     name = "file_util",
     srcs = ["file_util.cc"],
     hdrs = ["file_util.h"],
+    linkstatic = 1,
     deps = [
         "@boost//:filesystem",
         "@boost//:smart_ptr",
