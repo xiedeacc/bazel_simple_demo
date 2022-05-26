@@ -48,14 +48,14 @@ load("@com_grail_bazel_compdb//:deps.bzl", "bazel_compdb_deps")
 bazel_compdb_deps()
 
 git_repository(
-    name = "bazel_build_file_repo",
-    commit = "f112685c0f70c83c54c2013431a1c563ab59151a",
+    name = "bazel_build_repo",
+    commit = "5be2997da3e0ff5e4b635e80d428b6c206e9d7dc",
     remote = "https://github.com/xiedeacc/bazel_build_repo.git",
 )
 
-load("@bazel_build_file_repo//bazel:repositories.bzl", "deps")
-load("@bazel_build_file_repo//toolchains:toolchains.bzl", "register_all_toolchains")
-load("@bazel_build_file_repo//platforms:platforms.bzl", "register_all_execution_platforms")
+load("@bazel_build_repo//bazel:repositories.bzl", "deps")
+load("@bazel_build_repo//toolchains:toolchains.bzl", "register_all_toolchains")
+load("@bazel_build_repo//platforms:platforms.bzl", "register_all_execution_platforms")
 
 deps()
 
@@ -65,7 +65,7 @@ register_all_execution_platforms()
 
 new_git_repository(
     name = "cpplint",
-    build_file = "@bazel_build_file_repo//bazel:cpplint.BUILD",
+    build_file = "@bazel_build_repo//bazel:cpplint.BUILD",
     remote = "https://github.com/cpplint/cpplint.git",
     tag = "1.6.0",
 )
@@ -101,7 +101,7 @@ boost_deps()
 
 http_archive(
     name = "com_github_gperftools_gperftools",
-    build_file = "@bazel_build_file_repo//bazel:gperftools.BUILD",
+    build_file = "@bazel_build_repo//bazel:gperftools.BUILD",
     sha256 = "ea566e528605befb830671e359118c2da718f721c27225cbbc93858c7520fee3",
     strip_prefix = "gperftools-2.9.1",
     urls = ["https://github.com/gperftools/gperftools/releases/download/gperftools-2.9.1/gperftools-2.9.1.tar.gz"],
@@ -109,5 +109,5 @@ http_archive(
 
 bind(
     name = "gperftools",
-    actual = "@bazel_build_file_repo//bazel:gperftools",
+    actual = "@bazel_build_repo//bazel:gperftools",
 )
