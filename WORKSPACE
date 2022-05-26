@@ -50,7 +50,7 @@ bazel_compdb_deps()
 git_repository(
     name = "bazel_build_file_repo",
     commit = "f112685c0f70c83c54c2013431a1c563ab59151a",
-    remote = "https://github.com/xiedeacc/bazel_build_file_repo.git",
+    remote = "https://github.com/xiedeacc/bazel_build_repo.git",
 )
 
 load("@bazel_build_file_repo//bazel:repositories.bzl", "deps")
