@@ -49,7 +49,7 @@ bazel_compdb_deps()
 
 git_repository(
     name = "bazel_build_file",
-    commit = "53defaf51a0d2a5cb5bc40ffa0ebeec125e4224d",
+    commit = "5a927a56739a30b491a2cf48af0f76faf65f1782",
     remote = "https://github.com/xiedeacc/bazel_build_file.git",
 )
 
